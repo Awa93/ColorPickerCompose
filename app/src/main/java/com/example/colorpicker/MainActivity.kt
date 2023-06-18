@@ -1,6 +1,7 @@
 package com.example.colorpicker
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -10,7 +11,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Text
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -21,22 +24,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.colorpicker.screens.HueBar
-import com.example.colorpicker.screens.SatValPanel
+import com.example.colorpicker.screens.ColorBar
+import com.example.colorpicker.screens.ColorBox
 import com.example.colorpicker.ui.theme.ComposeColorPickerTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-           initScreen()
+           InitScreen()
         }
     }
 }
 
 
 @Composable
-fun initScreen(){
+fun InitScreen(){
     ComposeColorPickerTheme {
         Column(
             modifier = Modifier
@@ -56,13 +59,13 @@ fun initScreen(){
                 mutableStateOf(Color.hsv(hsv.value.first, hsv.value.second, hsv.value.third))
             }
 
-            SatValPanel(hue = hsv.value.first) { sat, value ->
+            ColorBox(hue = hsv.value.first) { sat, value ->
                 hsv.value = Triple(hsv.value.first, sat, value)
             }
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            HueBar { hue ->
+            ColorBar { hue ->
                 hsv.value = Triple(hue, hsv.value.second, hsv.value.third)
             }
 
@@ -73,6 +76,20 @@ fun initScreen(){
                     .size(100.dp)
                     .background(backgroundColor.value)
             )
+
+            val colorCode = remember {
+                mutableStateOf("")
+            }
+
+            colorCode.value = Integer.toHexString(backgroundColor.value.toArgb())
+
+            Text(
+                text = "#${colorCode.value}",
+                modifier= Modifier.padding(10.dp),
+            )
+
+            Log.d("ColorCode : ", "initScreen: " )
+
         }
     }
 }
@@ -80,5 +97,5 @@ fun initScreen(){
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    initScreen()
+    InitScreen()
 }

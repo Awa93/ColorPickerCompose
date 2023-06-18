@@ -36,7 +36,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun SatValPanel(
+fun ColorBox(
     hue: Float,
     setSatVal: (Float, Float) -> Unit
 ) {

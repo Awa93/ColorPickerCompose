@@ -2,4 +2,13 @@
 <resources>
 
     <style name="Theme.ColorPicker" parent="android:Theme.Material.Light.NoActionBar" />
+
+
+
+
+    <style name="Theme.SplashScreenApp" parent="android:Theme.Material.Light.NoActionBar"/>
+
+    <style name="SplashScreenTheme" parent="Theme.SplashScreenApp">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+    </style>
 </resources>
